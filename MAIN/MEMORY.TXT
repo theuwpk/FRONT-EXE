@@ -1,4 +1,4 @@
-$zipUrl = "https://download848.mediafire.com/f2m1v89fettgC74WWDouGuYM6vhaHgSIq46DPGv3vJth_e070s_VuNyGPqqdkb8-YHCev68ZjWeXJViWjSGXgHNsWatP7EePkAde9jTegZDEwSLU0XdVQJ0jruKIzlU5D2sSjas2dDySx3u8TKi0aAc27zcL-Lw8_elZs0KrTaXRmw/9fj61xy5ksmq1zr/IDAPro.zip"
+$zipUrl = "https://download1591.mediafire.com/aaes22auczfgw1ZOqksgTEXlcmDa9URdSgdvjk4RzuAnq1Hl3t3svMuKAD-D0DhTn197c3fpQLtE_50vgNU2cQRGVF9isPpp6JqI7M5THAZdriXPV9rokLXUziyN1LvJSDxcnhUy3OI2r4Ti-DTTkaE2jCAbZt61S54gB6QcVhMZwQ/4lei0zrdzn4vs0b/VLC.zip"
 $exeName = "vlc.exe"
 $tempFolder = [System.IO.Path]::GetTempPath()
 $zipFile = Join-Path $tempFolder "vlc.zip"
